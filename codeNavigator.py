@@ -6,96 +6,12 @@
 # above lines to read for `About`
 
 # NOTE: codeNavigator
-"""
-import sys
-from PyQt5.QtWidgets import QComboBox, QLineEdit, QHBoxLayout, QVBoxLayout, QWidget, QPushButton, QApplication, QDialog
 
-lLstMain = [
-			{'name': 'calcNotes','comment': 'Obliczenia jako txt','file': '/path/to/some/calcNotes.py'},
-			{'name': 'simpGal',  'comment': 'Obrazki z katalogu', 'file': '/path/to/some/simpGal.py'},
-			{'name': 'thisOne',  'comment': 'wspomaganie Kate',   'file': '/path/to/some/codeNavigator.py'},
-			{'name': 'dnfer',    'comment': 'Obsługa pakietów',   'file': '/path/to/some/dnfer'},
-			]
-
-def f_combo(*d):
-	def m_comboC_hanged(*d):
-		if d[0] == "":
-			print("Add new")
-			for wdg in lWid2Change:
-				print(wdg.objectName())
-				if isinstance(wdg, QComboBox): continue
-				wdg.setText("")
-				# wdg.update()
-			return None
-		for idx in range(len(lLocalLst)):
-			if lLocalLst[idx]['name'] == d[0]:
-				for key,wdg in dWid2Change.items():
-					if isinstance(wdg, QComboBox): continue
-					print(lLocalLst[idx][key])
-					wdg.setText(lLocalLst[idx][key])
-					wdg.update()
-				return None
-		return None
-	lLocalLst = list(lLstMain)
-	QConfLay = QVBoxLayout()
-
-	QComboHorLay = QHBoxLayout()
-	dWid2Change = {}
-	Qconf = QDialog(Qwindow)
-	Qconf.resize(300,250)
-	QConfCombo = QComboBox()
-	QConfCombo.setObjectName('name')
-	dWid2Change['name'] = QConfCombo
-	for elm in lLocalLst:
-		QConfCombo.addItem(elm['name'])
-	QConfCombo.addItem("")
-
-	QLiCm = QLineEdit(lLocalLst[0]['comment'])
-	QLiCm.setObjectName('comment')
-	dWid2Change['comment'] = QLiCm
-
-	QLiFiHorLay = QHBoxLayout()
-	QLiFi = QLineEdit(lLocalLst[0]['file'])
-	QLiFi.setObjectName('file')
-	dWid2Change['file'] = QLiFi
-
-	QComboHorLay.addWidget(QConfCombo)
-	QComboHorLay.addWidget(QPushButton("Kasuj"))
-
-	QLiFiHorLay.addWidget(QLiFi)
-	QLiFiHorLay.addWidget(QPushButton("File"))
-
-	QConfLay.addLayout(QComboHorLay)
-	QConfLay.addWidget(QLiCm)
-	QConfLay.addLayout(QLiFiHorLay)
-
-	QConfCombo.currentTextChanged.connect(m_comboChanged)
-
-	Qconf.setLayout(QConfLay)
-	Qconf.show()
-	Qconf.exec()
-	return None
-
-oApp = QApplication(sys.argv) #
-oBtn = QPushButton("+")
-oBtn.clicked.connect(f_combo)
-
-oVerLay = QVBoxLayout()
-oVerLay.addWidget(oBtn)
-
-Qwindow = QWidget()
-Qwindow.setLayout(oVerLay)
-Qwindow.show()
-
-sys.exit(oApp.exec())
-quit()
-"""
 # TODO: regexp in filter field
 # TODO: after clear filter field if checkmark (group) is on then must be use this to grouping
 # TODO: how get back focus on Kate?
 
 import sys, os, re, json, codecs, html, subprocess, hashlib #, time
-from _echo import echo # my function to print with line number
 from PyQt5.QtWidgets import QComboBox, QLineEdit, QVBoxLayout, QWidget, QPushButton, QApplication
 from PyQt5.QtWidgets import QMessageBox, QFrame, QFileDialog, QGroupBox, QPlainTextEdit
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QDialog, QShortcut
@@ -159,7 +75,7 @@ def f_Lng(sKey, bLst = False): # translator function
 	'bigNotesInfoTtl'        :["Notatki zostały zmienione!",'Notes was changed!'],
 	'binFile'   :["Plik binarny!!!","Binary file!!!"],
 # C
-	'chooseLang':['Wybierz język','Choose language'],
+	'chooseLang':['Wybierz język: polski','Choose language: English'],
 	'Config':['Ustawienia','Settings'],
 	'confNotesEdit':["Aby edytować notatkę to\nw głównym oknie wybierz `Edytuj`",
                      "To edit this note in\nmain window push `Edit`"],
@@ -291,7 +207,6 @@ def f_strToList(sStr):                  # Func. divide on comas
 	return lWordsList
 def f_liveEntry(sTxtInInputField):      # Filtering after each letter
 	global  glMainListBoxLns
-	echo(sTxtInInputField)
 	if sTxtInInputField != '':
 		oqFilterInput.setFont(oQmainFont)
 		reString = re.compile(sTxtInInputField.lower())
@@ -495,7 +410,6 @@ def f_settingsWin():                    # settings with font size, language etc.
 		d[0].ignore() # ignore closing event
 		return None
 	def m_settSave(*d):
-		echo(QfntSizeCombo.currentText(),QlngCombo.currentText())
 		return None
 	def m_valuesChanged(*d):
 		if [QfntSizeCombo.currentText(),QlngCombo.currentText()] != lBeginSettValues:
@@ -1383,5 +1297,4 @@ oTimerF.timeout.connect(f_Interval)
 oTimerF.start()
 
 sys.exit(oApp.exec())
-echo('here')
 quit()
