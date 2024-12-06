@@ -11,7 +11,7 @@
 # TODO: after clear filter field if checkmark (group) is on then must be use this to grouping
 # TODO: how get back focus on Kate?
 
-import sys, os, re, json, codecs, html, subprocess, hashlib #, time
+import sys, os, re, json, html, subprocess, hashlib
 from PyQt5.QtWidgets import QComboBox, QLineEdit, QVBoxLayout, QWidget, QPushButton, QApplication
 from PyQt5.QtWidgets import QMessageBox, QFrame, QFileDialog, QGroupBox, QPlainTextEdit
 from PyQt5.QtWidgets import QHBoxLayout, QLabel, QDialog, QShortcut
